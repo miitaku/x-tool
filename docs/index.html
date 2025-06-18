@@ -44,24 +44,31 @@
   <div id="outputArea"></div>
 
   <script>
-    document.getElementById("generateBtn").addEventListener("click", function () {
-      const trend = document.getElementById("trendInput").value.trim();
-      const template = document.getElementById("templateSelect").value;
-      const influencer = document.getElementById("influencerInput").value.trim();
-      const custom = document.getElementById("customText").value.trim();
+document.getElementById("generateBtn").addEventListener("click", function () {
+  const trend = document.getElementById("trendInput").value.trim();
+  const template = document.getElementById("templateSelect").value;
+  const influencer = document.getElementById("influencerInput").value.trim();
+  const custom = document.getElementById("customText").value.trim();
 
-      let prefix = "";
-      if (template === "1") {
-        prefix = "🧠 診断はこちら👇\nhttps://kazu.mob.marketing/entry\n";
-      } else if (template === "2") {
-        prefix = "📢 Zoomセミナー参加はこちら👇\nhttps://kazu.mob.marketing/zoom\n";
-      } else {
-        prefix = "🔥 今話題のテーマに乗っかれ！👇\n#副業 #生成AI\n";
-      }
+  let prefix = "";
+  let defaultTags = "";
 
-      const output = `${influencer ? influencer + '\n' : ''}${prefix}\n${custom}\n\n${trend}`;
-      document.getElementById("outputArea").textContent = output;
-    });
+  if (template === "1") {
+    prefix = "🧠 診断はこちら👇\nhttps://kazu.mob.marketing/entry\n";
+    defaultTags = "#副業 #診断AI";
+  } else if (template === "2") {
+    prefix = "📢 Zoomセミナー参加はこちら👇\nhttps://kazu.mob.marketing/zoom\n";
+    defaultTags = "#副業 #セミナー";
+  } else {
+    prefix = "🔥 今話題のテーマに乗っかれ！👇";
+    defaultTags = "#副業 #生成AI";
+  }
+
+  const tagsToUse = trend.includes("#") ? trend : defaultTags + '\n' + trend;
+
+  const output = `${influencer ? influencer + '\n' : ''}${prefix}\n${tagsToUse}\n\n${custom}`;
+  document.getElementById("outputArea").textContent = output;
+});
   </script>
 
 </body>
